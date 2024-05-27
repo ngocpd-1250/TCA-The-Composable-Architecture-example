@@ -1,0 +1,64 @@
+/*
+  Localizable.strings
+  TCA_example
+
+  Created by phan.duong.ngoc on 19/04/2024.
+
+*/
+
+"onboarding.get.started" = "はじめる";
+"onboarding.page1.title" = "マイムーリーズを追加";
+"onboarding.page1.description" = "いつでも大切な情報をキャプチャして、マイムーリーズを手軽に保存しましょう。";
+"onboarding.page2.title" = "簡単に整理";
+"onboarding.page2.description" = "ミッション、目標、または単に保存場所に、似たようなグループにマイムーリーズを整理しましょう。";
+"onboarding.page3.title" = "簡単に質問";
+"onboarding.page3.description" = "マイムーリーズに関連する何かを尋ねて、すぐに答えを得ましょう。";
+
+"common.register" = "登録する";
+"common.login" = "ログイン";
+"common.username" = "ユーザー名";
+"common.password" = "パスワード";
+"common.confirm.password" = "パスワードを確認";
+"common.dont.have.account" = "アカウントをお持ちでないですか？";
+"common.already.have.account" = "すでにアカウントをお持ちですか？";
+"common.see.more" = "もっと見る >";
+"common.tasks" = "タスク";
+"common.new.todo" = "新しいタスク";
+"common.delete" = "消去";
+
+"tabbar.movies" = "映画";
+"tabbar.todos" = "すべて";
+"tabbar.settings" = "設定";
+"tabbar.notification" = "通知";
+
+"movie.upcoming" = "今後の予定";
+"movie.top.rated" = "トップ評価";
+"movie.release" = "リリース";
+"movie.watch.title" = "何を見たいですか？";
+
+"settings.darkmode" = "ダークモード";
+"settings.logout" = "ログアウト";
+
+"language.english" = "英語";
+"language.japanese" = "日本語";
+
+"validation.email.invalid" = "有効なメールアドレスを入力してください。";
+"validation.email.empty" = "メールアドレスを入力してください。";
+"validation.email.maxlength" = "メールアドレスは128文字以下である必要があります。";
+"validation.password.invalid" = "有効なパスワードを入力してください。";
+"validation.password.empty" = "パスワードを入力してください。";
+"validation.password.maxlength" = "パスワードは255文字以下である必要があります。";
+"validation.confirm.password.empty" = "確認用のパスワードを入力してください。";
+"validation.confirm.password.invalid" = "パスワードが一致しません。";
+"validation.todo.item.invalid" = "メモと名前を入力してください";
+
+"todo.title" = "やることリスト";
+"todo.add" = "追加";
+"todo.name" = "名前";
+"todo.planning" = "計画は何ですか？";
+"todo.select.date" = "日付を選択";
+
+"notification.grant.permission" = "通知の許可を付与する";
+"notification.open.settings" = "設定を開いて通知の許可を付与する";
+"notification.granted" = "通知の許可が付与されました";
+"notification.arrived" = "通知が届きました";
