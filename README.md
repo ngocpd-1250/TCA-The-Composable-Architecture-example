@@ -77,6 +77,6 @@ The project is structured into the following directories:
 
 ## Demo
 
-[![Watch the video]](https://www.veed.io/view/0be09dd3-f7b4-46c4-ab0c-d964b802c1f7)
+[Watch the video](https://www.veed.io/view/0be09dd3-f7b4-46c4-ab0c-d964b802c1f7)
 
 
