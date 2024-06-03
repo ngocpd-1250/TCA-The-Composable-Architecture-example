@@ -59,7 +59,7 @@ struct HomeMainScreen: View {
             case .movie:
                 selectedTab = .movies
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    movieCoordinatorVM.performNavigation(.toMovieDetail(id: 12))
+                    movieCoordinatorVM.performNavigation(.toMovieDetail(id: 1022789))
                 }
             case .todo:
                 selectedTab = .todos

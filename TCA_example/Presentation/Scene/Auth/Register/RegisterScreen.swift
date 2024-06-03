@@ -66,18 +66,20 @@ struct RegisterScreen: View {
             }
         }
         .navigationBarHidden(true)
-        .alert(isPresented: Binding<Bool>(
-            get: { store.error != nil },
-            set: { _ in store.send(.setError(nil)) })
-        ) {
-            Alert(title: Text("Error"),
-                  message: Text(store.error?.localizedDescription ?? ""),
-                  dismissButton: .default(Text("OK")))
-        }
-        .alert(isPresented: $store.isRegistered.sending(\.setIsRegistered)) {
-            Alert(title: Text("Please Login"),
-                  message: Text("Registration succeeded. Please log in again."),
-                  dismissButton: .default(Text("OK")))
+        .alert(item: $store.alert.sending(\.setAlert)) { alert in
+            switch alert {
+            case .isRegistered:
+                return Alert(title: Text("Please Login"),
+                             message: Text("Registration succeeded. Please log in again."),
+                             dismissButton: .default(Text("OK"), action: {
+                                 store.send(.toLogin)
+                             }))
+            case .error(let error):
+                let message = error?.localizedDescription ?? ""
+                return Alert(title: Text("Error"),
+                             message: Text(message),
+                             dismissButton: .default(Text("OK")))
+            }
         }
     }
 }

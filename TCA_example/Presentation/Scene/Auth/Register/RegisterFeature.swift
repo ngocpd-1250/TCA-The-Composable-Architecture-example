@@ -25,7 +25,7 @@ struct RegisterFeature {
         var confirmPasswordValidationMessage = ""
         var hasPressedLoginButton = false
         var error: Error?
-        var isRegistered = false
+        var alert: Alert?
     }
 
     enum Action {
@@ -35,8 +35,21 @@ struct RegisterFeature {
         case toLogin
         case register
         case registerResponse(Result<Void, Error>)
-        case setError(Error?)
-        case setIsRegistered(Bool)
+        case setAlert(Alert?)
+    }
+
+    enum Alert: Identifiable {
+        var id: ObjectIdentifier {
+            switch self {
+            case .error(let error):
+                return ObjectIdentifier(error as AnyObject)
+            case .isRegistered:
+                return ObjectIdentifier(Self.isRegistered as AnyObject)
+            }
+        }
+
+        case error(Error?)
+        case isRegistered
     }
 
     var body: some ReducerOf<Self> {
@@ -86,21 +99,14 @@ struct RegisterFeature {
                 state.isLoading = false
                 switch result {
                 case .success:
-                    state.isRegistered = true
+                    state.alert = .isRegistered
                 case .failure(let error):
-                    state.error = error
+                    state.alert = .error(error)
                 }
                 return .none
 
-            case .setError(let error):
-                state.error = error
-                return .none
-
-            case .setIsRegistered(let value):
-                state.isRegistered = value
-                if !value {
-                    performNavigation(.pop) // to login
-                }
+            case .setAlert(let alert):
+                state.alert = alert
                 return .none
 
             case .toLogin:
