@@ -1,5 +1,16 @@
 # TCA (The Composable Architecture) Example App
 
+<p align="center">
+  <img src="screenshots/onboarding.png" width="20%"/>
+  <img src="screenshots/login.png" width="20%"/>
+  <img src="screenshots/register.png" width="20%"/>
+  <img src="screenshots/top_movie.png" width="20%"/>
+  <img src="screenshots/movie_detail.png" width="20%"/>
+  <img src="screenshots/todo_list.png" width="20%"/>
+  <img src="screenshots/add_todo.png" width="20%"/>
+  <img src="screenshots/settings.png" width="20%"/>
+</p>
+
 This example app demonstrates the usage of TCA (The Composable Architecture) to build a SwiftUI application.
 
 ## Features
@@ -75,8 +86,5 @@ The project is structured into the following directories:
 4. [Kingfisher](https://github.com/onevcat/Kingfisher.git): for loading and caching remote images
 5. [Alamofire](https://github.com/Alamofire/Alamofire.git): for API requests
 
-## Demo
-
-[Watch the video](https://www.veed.io/view/0be09dd3-f7b4-46c4-ab0c-d964b802c1f7)
 
 
