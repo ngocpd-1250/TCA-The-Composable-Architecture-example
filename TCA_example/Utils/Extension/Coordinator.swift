@@ -12,5 +12,5 @@ protocol NavigationAction {}
 protocol CoordinatorViewModel {
     associatedtype NavigationAction
 
-    func performNavigation(_ action: NavigationAction)
+    func perform(_ action: NavigationAction)
 }

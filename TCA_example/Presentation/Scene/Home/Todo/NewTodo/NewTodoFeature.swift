@@ -11,7 +11,6 @@ import Foundation
 
 @Reducer
 struct NewTodoFeature {
-    let performNavigation: (TodoFlowAction) -> Void
     @Injected(\.todoRepository) private var repository
 
     @ObservableState
@@ -21,17 +20,18 @@ struct NewTodoFeature {
         var name = ""
         var category = TodoCategory.all
         var isShowValidationError = false
+        var isClose = false
     }
 
     enum Action {
         case add
-        case todoAdded
-        case close
         case selectedDateChanged(Date)
         case noteChanged(String)
         case nameChanged(String)
         case selectCategory(TodoCategory)
         case setValidationError(Bool)
+        case clearState
+        case close
     }
 
     var body: some ReducerOf<Self> {
@@ -47,22 +47,22 @@ struct NewTodoFeature {
                                             note: state.note,
                                             category: state.category)
                     return .run { send in
-                        await send(.todoAdded)
+                        await send(.close)
                     }
                 } else {
                     state.isShowValidationError = true
                     return .none
                 }
 
-            case .todoAdded:
-                performNavigation(.close)
+            case .clearState:
                 state = NewTodoFeature.State()
                 return .none
 
             case .close:
-                performNavigation(.close)
-                state = NewTodoFeature.State()
-                return .none
+                state.isClose = true
+                return .run { send in
+                    await send(.clearState)
+                }
 
             case .selectedDateChanged(let date):
                 state.selectedDate = date

@@ -11,7 +11,6 @@ import Factory
 @Reducer
 struct RegisterFeature {
     @Injected(\.authRepository) private var repository
-    let performNavigation: (AuthFlowAction) -> Void
 
     @ObservableState
     struct State {
@@ -32,7 +31,6 @@ struct RegisterFeature {
         case usernameChanged(String)
         case passwordChanged(String)
         case confirmPasswordChanged(String)
-        case toLogin
         case register
         case registerResponse(Result<Void, Error>)
         case setAlert(Alert?)
@@ -107,10 +105,6 @@ struct RegisterFeature {
 
             case .setAlert(let alert):
                 state.alert = alert
-                return .none
-
-            case .toLogin:
-                performNavigation(.pop)
                 return .none
             }
         }

@@ -9,7 +9,7 @@ import Foundation
 import Factory
 
 extension Container {
-    var container: Factory<Container> {
+    var factory: Factory<Container> {
         Factory(self) { Container.shared }
     }
 }

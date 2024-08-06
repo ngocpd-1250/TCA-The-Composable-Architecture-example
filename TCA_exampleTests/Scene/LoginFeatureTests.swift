@@ -12,7 +12,6 @@ import Factory
 
 final class LoginFeatureTests: XCTestCase {
     private var store: TestStoreOf<LoginFeature>!
-    private var authFlowAction: AuthFlowAction!
     private var authRepository: AuthRepositoryMock!
     private var state: LoginFeature.State {
         return store.state
@@ -24,13 +23,9 @@ final class LoginFeatureTests: XCTestCase {
         Container.shared.authRepository.register { self.authRepository }
 
         store = TestStore(initialState: LoginFeature.State()) {
-            LoginFeature(performNavigation: performNavigation)
+            LoginFeature()
         }
         store.exhaustivity = .off(showSkippedAssertions: false)
-    }
-
-    private func performNavigation(_ action: AuthFlowAction) {
-        authFlowAction = action
     }
 
     func test_usernameChanged_updateUsernameState() async {
@@ -47,14 +42,6 @@ final class LoginFeatureTests: XCTestCase {
 
         // assert
         XCTAssertEqual(state.password, "Aa@123456")
-    }
-
-    func test_toRegister_performNavigationToRegister() async {
-        // action
-        await store.send(.toRegister)
-
-        // assert
-        XCTAssertEqual(authFlowAction, .toRegister)
     }
 
     func test_login_withEmptyUsernameEmptyPassword_showErrors() async {

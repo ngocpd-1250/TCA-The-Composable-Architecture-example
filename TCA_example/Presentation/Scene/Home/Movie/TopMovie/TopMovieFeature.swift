@@ -11,7 +11,6 @@ import Factory
 @Reducer
 struct TopMovieFeature {
     @Injected(\.movieRepository) private var repository
-    let performNavigation: (MovieFlowAction) -> Void
 
     @ObservableState
     struct State {
@@ -30,7 +29,6 @@ struct TopMovieFeature {
         case topRatedMoviesResponse(movies: [Movie])
         case loadUpcomingMovies(isReload: Bool)
         case upcomingMoviesMoviesResponse(movies: [Movie])
-        case toDetail(id: Int)
         case setLoading(Bool)
         case setError(Error?)
     }
@@ -72,10 +70,6 @@ struct TopMovieFeature {
             case .upcomingMoviesMoviesResponse(let movies):
                 decreaseLoading(&state)
                 state.upcoming = movies
-                return .none
-
-            case .toDetail(let id):
-                performNavigation(.toMovieDetail(id: id))
                 return .none
 
             case .setLoading(let isLoading):

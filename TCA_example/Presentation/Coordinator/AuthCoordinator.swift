@@ -27,26 +27,26 @@ enum AuthFlowAction: NavigationAction {
 
 final class AuthCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<AuthScreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
 
     init() {
-        performNavigation(.initRoute)
+        perform(.initRoute)
     }
 
-    func performNavigation(_ action: AuthFlowAction) {
+    func perform(_ action: AuthFlowAction) {
         switch action {
         case .initRoute:
             let isOnboardingCompleted = Defaults[.isOnboardingCompleted]
-            let loginScreen = container.loginScreen(performNavigation)
-            let onboardingScreen = container.onboardingScreen(performNavigation)
+            let loginScreen = factory.loginScreen.resolve()
+            let onboardingScreen = factory.onboardingScreen.resolve()
             routes = [.root(isOnboardingCompleted ? .login(loginScreen) : .onboarding(onboardingScreen),
                             embedInNavigationView: true)]
         case .toLogin:
-            let screen = container.loginScreen(performNavigation)
+            let screen = factory.loginScreen.resolve()
             routes = [.root(.login(screen),
                             embedInNavigationView: true)]
         case .toRegister:
-            let screen = container.registerScreen(performNavigation)
+            let screen = factory.registerScreen.resolve()
             routes.push(.register(screen))
         case .pop:
             routes.pop()
@@ -68,5 +68,6 @@ struct AuthCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

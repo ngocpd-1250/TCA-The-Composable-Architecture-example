@@ -10,7 +10,6 @@ import Factory
 
 @Reducer
 struct TodoListFeature {
-    let performNavigation: (TodoFlowAction) -> Void
     @Injected(\.todoRepository) private var repository
 
     @ObservableState
@@ -43,9 +42,6 @@ struct TodoListFeature {
             case .deleteItem(let item):
                 try? repository.deleteTodo(item: item)
                 state.todoItems = (try? repository.getTodos(category: state.category)) ?? []
-                if state.todoItems.isEmpty {
-                    performNavigation(.pop)
-                }
                 return .none
             }
         }

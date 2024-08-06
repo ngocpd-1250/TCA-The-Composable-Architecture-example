@@ -26,26 +26,26 @@ enum TodoFlowAction: NavigationAction {
 
 final class TodoCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<TodoSreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
     private var todoStore: StoreOf<TodoFeature>!
 
     init() {
-        todoStore = container.todoStore(performNavigation)
-        performNavigation(.initRoute)
+        todoStore = factory.todoStore.resolve()
+        perform(.initRoute)
     }
 
-    func performNavigation(_ action: TodoFlowAction) {
+    func perform(_ action: TodoFlowAction) {
         switch action {
         case .initRoute:
             let topTodoStore = todoStore.scope(state: \.topTodo, action: \.topTodo)
-            routes = [.root(.topTodo(container.topTodoScreen(topTodoStore)),
+            routes = [.root(.topTodo(factory.topTodoScreen(topTodoStore)),
                             embedInNavigationView: true)]
         case .toTodoList(let category):
             let store = todoStore.scope(state: \.todoList, action: \.todoList)
             let params = (store, category)
-            routes.push(.todoList(container.todoListScreen(params)))
+            routes.push(.todoList(factory.todoListScreen(params)))
         case .toAddNewTodo:
-            let screen = container.addNewTodoScreen(todoStore.scope(state: \.newTodo, action: \.newTodo))
+            let screen = factory.addNewTodoScreen(todoStore.scope(state: \.newTodo, action: \.newTodo))
             routes.presentCover(.addNewTodo(screen),
                                 embedInNavigationView: true)
         case .close:
@@ -70,5 +70,6 @@ struct TodoCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

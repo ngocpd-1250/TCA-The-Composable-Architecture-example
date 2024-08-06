@@ -11,6 +11,7 @@ import Factory
 
 struct NewTodoScreen: View {
     @Bindable var store: StoreOf<NewTodoFeature>
+    @EnvironmentObject var coordinator: TodoCoordinatorViewModel
 
     init(store: StoreOf<NewTodoFeature>) {
         self.store = store
@@ -61,6 +62,12 @@ struct NewTodoScreen: View {
             Alert(title: Text("Error"),
                   message: Text(R.string.localizable.validationTodoItemInvalid()),
                   dismissButton: .default(Text("OK")))
+        }
+        .onChange(of: store.isClose) { _, newValue in
+            guard newValue else {
+                return
+            }
+            coordinator.perform(.close)
         }
     }
 
@@ -190,10 +197,8 @@ struct NewTodoScreen: View {
 
 struct NewTodoScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (TodoFlowAction) -> Void = { _ in
-        }
         let store = Store(initialState: NewTodoFeature.State()) {
-            NewTodoFeature(performNavigation: perform)
+            NewTodoFeature()
         }
         return Container.shared.addNewTodoScreen(store)
     }

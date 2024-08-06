@@ -10,7 +10,6 @@ import Factory
 
 @Reducer
 struct SettingsFeature {
-    let performNavigation: (SettingsFlowAction) -> Void
     @Injected(\.settingsRepository) private var repository
 
     @ObservableState

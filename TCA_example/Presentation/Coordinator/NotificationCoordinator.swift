@@ -20,16 +20,16 @@ enum NotificationFlowAction: NavigationAction {
 
 final class NotificationCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<NotificationScreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
 
     init() {
-        performNavigation(.initRoute)
+        perform(.initRoute)
     }
 
-    func performNavigation(_ action: NotificationFlowAction) {
+    func perform(_ action: NotificationFlowAction) {
         switch action {
         case .initRoute:
-            let screen = container.notificationScreen(performNavigation)
+            let screen = factory.notificationScreen.resolve()
             routes = [.root(.notification(screen))]
         }
     }
@@ -45,5 +45,6 @@ struct NotificationCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

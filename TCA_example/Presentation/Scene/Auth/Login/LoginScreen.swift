@@ -12,6 +12,7 @@ import Factory
 
 struct LoginScreen: View {
     @Bindable var store: StoreOf<LoginFeature>
+    @EnvironmentObject var coordinator: AuthCoordinatorViewModel
 
     init(store: StoreOf<LoginFeature>) {
         self.store = store
@@ -50,7 +51,7 @@ struct LoginScreen: View {
                         .padding(.top, Spacing.extraLarge.value)
 
                     Button {
-                        store.send(.toRegister)
+                        coordinator.perform(.toRegister)
                     } label: {
                         Text(R.string.localizable.commonRegister())
                             .foregroundStyle(Color(R.color.primary))
@@ -73,8 +74,6 @@ struct LoginScreen: View {
 
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (AuthFlowAction) -> Void = { _ in
-        }
-        return Container.shared.loginScreen(perform)
+        return Container.shared.loginScreen.resolve()
     }
 }

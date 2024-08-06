@@ -10,7 +10,6 @@ import Factory
 
 @Reducer
 struct TopTodoFeature {
-    let performNavigation: (TodoFlowAction) -> Void
     @Injected(\.todoRepository) private var repository
 
     @ObservableState
@@ -20,8 +19,6 @@ struct TopTodoFeature {
 
     enum Action {
         case load
-        case toAddNew
-        case toListTodo(TodoCategory)
     }
 
     var body: some ReducerOf<Self> {
@@ -29,14 +26,6 @@ struct TopTodoFeature {
             switch action {
             case .load:
                 state.todoLists = (try? repository.getTodoLists()) ?? []
-                return .none
-
-            case .toAddNew:
-                performNavigation(.toAddNewTodo)
-                return .none
-
-            case .toListTodo(let category):
-                performNavigation(.toTodoList(category: category))
                 return .none
             }
         }

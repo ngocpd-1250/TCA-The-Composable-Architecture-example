@@ -77,10 +77,8 @@ struct TodoListScreen: View {
 
 struct TodoListScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (TodoFlowAction) -> Void = { _ in
-        }
         let store = Store(initialState: TodoListFeature.State()) {
-            TodoListFeature(performNavigation: perform)
+            TodoListFeature()
         }
         return Container.shared.todoListScreen((store, TodoCategory.all))
     }

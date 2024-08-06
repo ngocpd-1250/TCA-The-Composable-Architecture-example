@@ -11,7 +11,8 @@ import ComposableArchitecture
 import Factory
 
 struct TopTodoScreen: View {
-    private var store: StoreOf<TopTodoFeature>
+    @Bindable var store: StoreOf<TopTodoFeature>
+    @EnvironmentObject var coordinator: TodoCoordinatorViewModel
 
     init(store: StoreOf<TopTodoFeature>) {
         self.store = store
@@ -43,7 +44,7 @@ struct TopTodoScreen: View {
                               ForEach(todoLists, id: \.category.id) { item in
                                   TodoListItem(todoList: item)
                                       .onTapGesture {
-                                          store.send(.toListTodo(item.category))
+                                          coordinator.perform(.toTodoList(category: item.category))
                                       }
                               }
                           })
@@ -71,7 +72,7 @@ struct TopTodoScreen: View {
                 Spacer()
 
                 Button(action: {
-                    store.send(.toAddNew)
+                    coordinator.perform(.toAddNewTodo)
                 }, label: {
                     Image(systemName: "plus.circle.fill")
                         .resizable()
@@ -86,10 +87,8 @@ struct TopTodoScreen: View {
 
 struct TopTodoScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (TodoFlowAction) -> Void = { _ in
-        }
         let store = Store(initialState: TopTodoFeature.State()) {
-            TopTodoFeature(performNavigation: perform)
+            TopTodoFeature()
         }
         return Container.shared.topTodoScreen(store)
     }

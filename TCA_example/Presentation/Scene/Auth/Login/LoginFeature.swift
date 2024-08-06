@@ -11,7 +11,6 @@ import Factory
 @Reducer
 struct LoginFeature {
     @Injected(\.authRepository) private var repository
-    let performNavigation: (AuthFlowAction) -> Void
 
     @ObservableState
     struct State {
@@ -28,7 +27,6 @@ struct LoginFeature {
     enum Action {
         case usernameChanged(String)
         case passwordChanged(String)
-        case toRegister
         case login
         case loginResponse(Result<Void, Error>)
         case setError(Error?)
@@ -84,10 +82,6 @@ struct LoginFeature {
 
             case .setError(let error):
                 state.error = error
-                return .none
-
-            case .toRegister:
-                performNavigation(.toRegister)
                 return .none
             }
         }

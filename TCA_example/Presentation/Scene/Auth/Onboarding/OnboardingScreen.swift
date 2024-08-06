@@ -10,7 +10,8 @@ import SwiftUI
 import Factory
 
 struct OnboardingScreen: View {
-    let store: StoreOf<OnboardingFeature>
+    @Bindable var store: StoreOf<OnboardingFeature>
+    @EnvironmentObject var coordinator: AuthCoordinatorViewModel
 
     @State var selectedPage = 0
     private var pages = OnboardingPage.allCases
@@ -53,7 +54,8 @@ struct OnboardingScreen: View {
 
             if isLastPage {
                 BaseButton(title: R.string.localizable.onboardingGetStarted()) {
-                    store.send(.toLogin)
+                    coordinator.perform(.toLogin)
+                    store.send(.setDoneOnboarding)
                 }
                 .frame(width: 240, height: 52)
                 .padding(.top, Spacing.normal.value)
@@ -65,8 +67,6 @@ struct OnboardingScreen: View {
 
 struct OnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (AuthFlowAction) -> Void = { _ in
-        }
-        return Container.shared.onboardingScreen(perform)
+        return Container.shared.onboardingScreen.resolve()
     }
 }

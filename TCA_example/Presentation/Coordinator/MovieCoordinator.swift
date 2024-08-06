@@ -22,20 +22,19 @@ enum MovieFlowAction: NavigationAction {
 
 final class MovieCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<MovieScreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
 
     init() {
-        performNavigation(.initRoute)
+        perform(.initRoute)
     }
 
-    func performNavigation(_ action: MovieFlowAction) {
+    func perform(_ action: MovieFlowAction) {
         switch action {
         case .initRoute:
-            routes = [.root(.movieList(container.topMovieScreen(performNavigation)),
+            routes = [.root(.movieList(factory.topMovieScreen.resolve()),
                             embedInNavigationView: true)]
         case .toMovieDetail(let id):
-            let params = (id, performNavigation)
-            routes.push(.movieDetail(container.movieDetailScreen(params)))
+            routes.push(.movieDetail(factory.movieDetailScreen(id)))
         }
     }
 }
@@ -52,5 +51,6 @@ struct MovieCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

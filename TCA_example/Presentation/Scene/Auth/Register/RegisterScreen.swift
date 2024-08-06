@@ -12,6 +12,7 @@ import Factory
 
 struct RegisterScreen: View {
     @Bindable var store: StoreOf<RegisterFeature>
+    @EnvironmentObject var coordinator: AuthCoordinatorViewModel
 
     init(store: StoreOf<RegisterFeature>) {
         self.store = store
@@ -56,7 +57,7 @@ struct RegisterScreen: View {
                         .padding(.top, Spacing.extraLarge.value)
 
                     Button {
-                        store.send(.toLogin)
+                        coordinator.perform(.pop)
                     } label: {
                         Text(R.string.localizable.commonLogin())
                             .foregroundStyle(Color(R.color.primary))
@@ -72,7 +73,7 @@ struct RegisterScreen: View {
                 return Alert(title: Text("Please Login"),
                              message: Text("Registration succeeded. Please log in again."),
                              dismissButton: .default(Text("OK"), action: {
-                                 store.send(.toLogin)
+                                 coordinator.perform(.pop)
                              }))
             case .error(let error):
                 let message = error?.localizedDescription ?? ""
@@ -86,8 +87,6 @@ struct RegisterScreen: View {
 
 struct RegisterScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (AuthFlowAction) -> Void = { _ in
-        }
-        return Container.shared.registerScreen(perform)
+        return Container.shared.registerScreen.resolve()
     }
 }

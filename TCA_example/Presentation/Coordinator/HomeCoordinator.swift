@@ -21,13 +21,13 @@ enum HomeFlowAction: NavigationAction {
 
 final class HomeCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<HomeScreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
 
     init() {
-        performNavigation(.initRoute)
+        perform(.initRoute)
     }
 
-    func performNavigation(_ action: HomeFlowAction) {
+    func perform(_ action: HomeFlowAction) {
         switch action {
         case .initRoute:
             let homeScreen = HomeMainScreen()
@@ -46,5 +46,6 @@ struct HomeCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

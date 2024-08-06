@@ -10,12 +10,12 @@ import Factory
 import ComposableArchitecture
 
 extension Container {
-    var todoStore: ParameterFactory<(TodoFlowAction) -> Void, StoreOf<TodoFeature>> {
-        self { performNavigation in
+    var todoStore: Factory<StoreOf<TodoFeature>> {
+        self {
             Store(initialState: TodoFeature.State(topTodo: TopTodoFeature.State(),
                                                   newTodo: NewTodoFeature.State(),
                                                   todoList: TodoListFeature.State())) {
-                TodoFeature(performNavigation: performNavigation)
+                TodoFeature()
             }
         }
     }

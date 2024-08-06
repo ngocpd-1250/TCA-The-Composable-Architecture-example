@@ -18,17 +18,17 @@ enum SettingsFlowAction: NavigationAction {}
 
 final class SettingsCoordinatorViewModel: ObservableObject, CoordinatorViewModel {
     @Published var routes: Routes<SettingsScreenType> = []
-    @Injected(\.container) private var container
+    @Injected(\.factory) private var factory
 
     init() {
         initRoutes()
     }
 
     private func initRoutes() {
-        routes = [.root(.settings(container.settingsScreen(performNavigation)))]
+        routes = [.root(.settings(factory.settingsScreen.resolve()))]
     }
 
-    func performNavigation(_: SettingsFlowAction) {}
+    func perform(_: SettingsFlowAction) {}
 }
 
 struct SettingsCoordinator: View {
@@ -41,5 +41,6 @@ struct SettingsCoordinator: View {
                 screen
             }
         }
+        .environmentObject(viewModel)
     }
 }

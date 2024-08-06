@@ -11,6 +11,7 @@ import Factory
 
 struct TopMoviesScreen: View {
     @Bindable var store: StoreOf<TopMovieFeature>
+    @EnvironmentObject var coordinator: MovieCoordinatorViewModel
 
     init(store: StoreOf<TopMovieFeature>) {
         self.store = store
@@ -23,7 +24,7 @@ struct TopMoviesScreen: View {
                 LazyHStack(spacing: 16) {
                     ForEach(upcomingMovies) { movie in
                         Button {
-                            store.send(.toDetail(id: movie.id))
+                            coordinator.perform(.toMovieDetail(id: movie.id))
                         } label: {
                             HorizontalMovieCard(movie: movie)
                         }
@@ -39,7 +40,7 @@ struct TopMoviesScreen: View {
         Section(title: R.string.localizable.movieTopRated()) {
             ForEach(topRatedMovies) { movie in
                 Button {
-                    store.send(.toDetail(id: movie.id))
+                    coordinator.perform(.toMovieDetail(id: movie.id))
                 } label: {
                     VerticalMovieCard(movie: movie)
                 }
@@ -84,8 +85,6 @@ struct TopMoviesScreen: View {
 
 struct TopMovieScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let perform: (MovieFlowAction) -> Void = { _ in
-        }
-        return Container.shared.topMovieScreen(perform)
+        return Container.shared.topMovieScreen.resolve()
     }
 }

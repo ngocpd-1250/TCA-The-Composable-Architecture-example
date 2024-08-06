@@ -11,7 +11,6 @@ import Factory
 @Reducer
 struct MovieDetailFeature {
     let id: Int
-    let performNavigation: (MovieFlowAction) -> Void
     @Injected(\.movieRepository) private var repository
 
     @ObservableState

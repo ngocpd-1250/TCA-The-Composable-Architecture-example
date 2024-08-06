@@ -10,37 +10,37 @@ import Factory
 import ComposableArchitecture
 
 extension Container {
-    var loginScreen: ParameterFactory<(AuthFlowAction) -> Void, LoginScreen> {
-        self { performNavigation in
+    var loginScreen: Factory<LoginScreen> {
+        self {
             let store = Store(initialState: LoginFeature.State()) {
-                LoginFeature(performNavigation: performNavigation)
+                LoginFeature()
             }
             return LoginScreen(store: store)
         }
     }
 
-    var onboardingScreen: ParameterFactory<(AuthFlowAction) -> Void, OnboardingScreen> {
-        self { performNavigation in
+    var onboardingScreen: Factory<OnboardingScreen> {
+        self {
             let store = Store(initialState: OnboardingFeature.State()) {
-                OnboardingFeature(performNavigation: performNavigation)
+                OnboardingFeature()
             }
             return OnboardingScreen(store: store)
         }
     }
 
-    var registerScreen: ParameterFactory<(AuthFlowAction) -> Void, RegisterScreen> {
-        self { performNavigation in
+    var registerScreen: Factory<RegisterScreen> {
+        self {
             let store = Store(initialState: RegisterFeature.State()) {
-                RegisterFeature(performNavigation: performNavigation)
+                RegisterFeature()
             }
             return RegisterScreen(store: store)
         }
     }
 
-    var settingsScreen: ParameterFactory<(SettingsFlowAction) -> Void, SettingsScreen> {
-        self { performNavigation in
+    var settingsScreen: Factory<SettingsScreen> {
+        self {
             let store = Store(initialState: SettingsFeature.State()) {
-                SettingsFeature(performNavigation: performNavigation)
+                SettingsFeature()
             }
             return SettingsScreen(store: store)
         }
@@ -66,28 +66,28 @@ extension Container {
         }
     }
 
-    var topMovieScreen: ParameterFactory<(MovieFlowAction) -> Void, TopMoviesScreen> {
-        self { performNavigation in
+    var topMovieScreen: Factory<TopMoviesScreen> {
+        self {
             let store = Store(initialState: TopMovieFeature.State()) {
-                TopMovieFeature(performNavigation: performNavigation)
+                TopMovieFeature()
             }
             return TopMoviesScreen(store: store)
         }
     }
 
-    var movieDetailScreen: ParameterFactory<(Int, (MovieFlowAction) -> Void), MovieDetailScreen> {
-        self { params in
+    var movieDetailScreen: ParameterFactory<Int, MovieDetailScreen> {
+        self { id in
             let store = Store(initialState: MovieDetailFeature.State()) {
-                MovieDetailFeature(id: params.0, performNavigation: params.1)
+                MovieDetailFeature(id: id)
             }
             return MovieDetailScreen(store: store)
         }
     }
 
-    var notificationScreen: ParameterFactory<(NotificationFlowAction) -> Void, NotificationScreen> {
-        self { performNavigation in
+    var notificationScreen: Factory<NotificationScreen> {
+        self {
             let store = Store(initialState: NotificationFeature.State()) {
-                NotificationFeature(performNavigation: performNavigation)
+                NotificationFeature()
             }
             return NotificationScreen(store: store)
         }

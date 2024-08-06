@@ -12,7 +12,6 @@ import UserNotifications
 @Reducer
 struct NotificationFeature {
     @Injected(\.notificationRepository) private var repository
-    let performNavigation: (NotificationFlowAction) -> Void
 
     @ObservableState
     struct State {

@@ -11,8 +11,6 @@ import Foundation
 
 @Reducer
 struct TodoFeature {
-    let performNavigation: (TodoFlowAction) -> Void
-
     @ObservableState
     struct State {
         var topTodo: TopTodoFeature.State
@@ -28,17 +26,17 @@ struct TodoFeature {
 
     var body: some Reducer<State, Action> {
         Scope(state: \.topTodo, action: /Action.topTodo) {
-            TopTodoFeature(performNavigation: performNavigation)
+            TopTodoFeature()
         }
         Scope(state: \.newTodo, action: /Action.newTodo) {
-            NewTodoFeature(performNavigation: performNavigation)
+            NewTodoFeature()
         }
         Scope(state: \.todoList, action: /Action.todoList) {
-            TodoListFeature(performNavigation: performNavigation)
+            TodoListFeature()
         }
         Reduce { _, action in
             switch action {
-            case .newTodo(.todoAdded):
+            case .newTodo(.close):
                 return .run { send in
                     await send(.topTodo(.load))
                 }
